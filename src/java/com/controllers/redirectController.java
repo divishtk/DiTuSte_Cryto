@@ -1,4 +1,3 @@
-package com.controllers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -98,3 +97,4 @@ public class redirectController extends HttpServlet {
     }// </editor-fold>
 
 }
+

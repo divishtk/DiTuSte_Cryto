@@ -1,38 +1,31 @@
 package com.controllers;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * // BRO I THINK AGAIN ERROR WILL COME MODULE W WnoA its compiling the whole project again
  * @author Nevets
  */
-public class loginServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+//@WebServlet("/loginServlet")
+public class loginServlet extends HttpServlet 
+{
+    
+
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -51,15 +44,7 @@ public class loginServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -72,15 +57,16 @@ public class loginServlet extends HttpServlet {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection dbConn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/cryptodb?useSSL=false&allowPublicKeyRetrieval=true", "root", "Steven@1996");
+                    "jdbc:mysql://localhost:3306/DeTuSte?useSSL=false&allowPublicKeyRetrieval=true", "root", "ilovemaster");
             dbConn.setAutoCommit(false);
             PreparedStatement ps = dbConn.prepareStatement(
-                    "select * from users where userName=? and userPassword=?");
+                    "select * from Users2 where userName=? and userPassword=?");
             ps.setString(1, name);
             ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 exist = true;
+                String userid=rs.getString(1);
                 String name1 = rs.getString(2);
                 String pass1 = rs.getString(3);
                 flag = (name.equalsIgnoreCase(name1) && pass.equalsIgnoreCase(pass1) ? true : false);
@@ -89,13 +75,17 @@ public class loginServlet extends HttpServlet {
                     hs = request.getSession();
                     hs.setAttribute("uName", name1);
                     hs.setAttribute("uemailId", pass1);
+                    hs.setAttribute("userid",userid);
+                    System.out.println("USER ID IS "+userid);
                 }
             }
             response.setContentType("text/html;charset=UTF-8");
 
             if (exist) {
                 if (flag) {
+                    System.out.println("hi get");
                     response.sendRedirect("/DiTuSte_Cryto/views/home.jsp");
+                    
                 } else {
                     try (PrintWriter out = response.getWriter()) {
                         out.println("<!DOCTYPE html>");
@@ -137,32 +127,87 @@ public class loginServlet extends HttpServlet {
         System.out.println("POST login servlet");
         
         int userId = 0;
-        String name, pass, emailId, role;
+        String name, pass, emailId, role,address,age,gender,experience,lang;
+        PrintWriter out = response.getWriter();
+       
+        
+        
         try {
+            
+            
 
             name = request.getParameter("name");
             pass = request.getParameter("pass");
             emailId = request.getParameter("email");
             role = request.getParameter("role");
+            
+            address=request.getParameter("address");
+            age=request.getParameter("age");
+            gender=request.getParameter("inlineRadioOptions");
+            experience=request.getParameter("exp");
+              lang=request.getParameter("lang");
+           
+      
+            HashMap<String,String> userDetails= new HashMap<String,String>();
+             userDetails.put("firstName", name);
+             userDetails.put("email", emailId);
+             userDetails.put("password",pass);
+             userDetails.put("role",role);
+            
+               userDetails.put("address",address);
+                 userDetails.put("age",age);
+                   userDetails.put("gender",gender);  
+                   userDetails.put("exp",experience);
+                   
+             
+            
+            
+            
+            
+            HttpSession session=request.getSession();
+            
+            session.setAttribute("name",userDetails);
+            
+           
+       
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection dbConn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/cryptodb?useSSL=false&allowPublicKeyRetrieval=true", "root", "Steven@1996");
+                    "jdbc:mysql://localhost:3306/DeTuSte?useSSL=false&allowPublicKeyRetrieval=true", "root", "ilovemaster");
             dbConn.setAutoCommit(false);
             PreparedStatement ps = dbConn.prepareStatement(
-                    "insert into users(userName, userPassword, userEmailId, userType, updatedBy) values (?,?,?,?,CURDATE())");
+                    "insert into Users2(userName, userPassword, userEmailId, userType, updatedBy,userAge,userGender,userAddress,userExp,userLang) values (?,?,?,?,CURDATE(),?,?,?,?,?)");
             ps.setString(1, name);
             ps.setString(2, pass);
             ps.setString(3, emailId);
             ps.setString(4, role);
+            ps.setString(5,age);
+                  ps.setString(6,gender);
+                        ps.setString(7,address);
+                              ps.setString(8,experience );
+                              ps.setString(9, lang);
+                              
             int i = ps.executeUpdate();
-            if (i > 0) {
+            
+            
+      
+            
+            
+            if (i > 0) 
+            {
                 dbConn.commit();
                 System.out.println("Successfully Updated 1 row");
-            } else {
+            } else 
+            {
                 System.out.println("Failed to Update");
             }
-            response.sendRedirect("/DiTuSte_Cryto/");
+          // response.sendRedirect("/DiTuSte_Crypto/index.jsp");
+          response.sendRedirect("/DiTuSte_Cryto/index.jsp");
+           out.println("HIII");
+           
+           
+           
+           
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
