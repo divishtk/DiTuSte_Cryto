@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>Home</title>
+        <title>DiTuSte_Crypto</title>
 
         <%@ include file="/WEB-INF/jspf/linkFiles.jspf" %>
     </head>
@@ -90,9 +90,6 @@
                 <center> <h1>Welcome,<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <%= name%></h1></center>
                 <h2>Web Security</h2>
                
-
-
-             
                 </div>
                   <div class="container">
                     <h2>Write your Content Here..</h2>

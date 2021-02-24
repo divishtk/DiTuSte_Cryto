@@ -4,6 +4,7 @@
     Author     : Nevets
 --%>
 
+<%@page import="com.database.ConnectionManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -19,168 +20,126 @@
               type="image/png" 
               href="https://www.iseurope.org/exhibitor_logos/logo_200_200/DTS_00157000024e5kWAAQ.jpg">
 
-        <title>Home</title>
+        <title>DiTuSte_Crypto</title>
 
         <%@ include file="/WEB-INF/jspf/linkFiles.jspf" %>
     </head>
     <body>
         <div class="wrapper">
             <!-- Sidebar  -->
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <div class="mx-3 row">
-                        <div class="col-3">
-                            <img src="https://www.iseurope.org/exhibitor_logos/logo_200_200/DTS_00157000024e5kWAAQ.jpg"
-                                 style="width: 40px;height: 40px;"/>
-                        </div>
-                        <div class="col-9 font-weight-bold">
-                            DiTuSte <br/>&nbsp;&nbsp;&nbsp; Crypto
-                            
-                        </div>
-                    </div>
-                </div>
-
-                <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="#">Dashboard</a>
-                    </li>
-                    <li class="">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Security</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li>
-                                <a href="labUser.jsp">Security Tools</a>
-                            </li>
-                            <li>
-                                <a href="articlePage.jsp">Security Guidance</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-
-                      
-
-                        <a href="viewProjects.jsp">My Projects</a>
-                    </li>
-                    <li>
-                        <a href="UserProfile.jsp">My Profile</a>
-                    </li>
-                    <li>
-                        <a href="#">About Us</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </nav>
+            <%@include file="constant/sidebar1.jsp" %>
 
             <!-- Page Content  -->
             <div id="content">
 
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-
-                        <button type="button" id="sidebarCollapse" class="btn btn-info">
-                            <i class="fas fa-align-left"></i>
-                            <span>Menu</span>
-                        </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fas fa-align-center"></i>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">My Profile <i class="fas fa-male"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Notification <i class="fas fa-bell"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/DiTuSte_Cryto/logoutSerlvet">Logout <i class="fas fa-sign-out-alt"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <%@include file="constant/headerNav1.jsp" %>
                 <%
-                    String name="";
-                    String pass="";
-                    try
-                    {
-                       name = (String) session.getAttribute("uName");
-                      pass = (String) session.getAttribute("uemailId");
-                      
-                       Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection dbConn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/DeTuSte?useSSL=false&allowPublicKeyRetrieval=true", "root", "ilovemaster");
-            dbConn.setAutoCommit(false);
-          
-            Statement st=dbConn.createStatement();
-           // st.execute("select userName, userPassword, userEmailId, userType from Users2 where userName=name and userPassword=pass");
-            
-            ResultSet rs=st.executeQuery("select userName, userPassword, userEmailId, userType,userAge,userGender,userAddress,userExp,userLang from Users2 where userName='"+name + "'and userPassword='"+pass + "'" );
+                    String name = "";
+                    String pass = "";
+                    try {
+                        name = (String) session.getAttribute("uName");
+                        pass = (String) session.getAttribute("uemailId");
 
-                while(rs.next())
-                {
-                        // System.out.println("name"+rs.getString(1));
-                          //    System.out.println(rs.getString(2));
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection dbConn = ConnectionManager.getConnection();
+                        dbConn.setAutoCommit(false);
+
+                        Statement st = dbConn.createStatement();
+                        // st.execute("select userName, userPassword, userEmailId, userType from Users2 where userName=name and userPassword=pass");
+
+                        ResultSet rs = st.executeQuery("select userName, userPassword, userEmailId, userType,userAge,userGender,userAddress,userExp,userLang from Users2 where userName='" + name + "'and userPassword='" + pass + "'");
+
+                        while (rs.next()) {
+                            // System.out.println("name"+rs.getString(1));
+                            //    System.out.println(rs.getString(2));
                             //       System.out.println(rs.getString(3));
-                              //          System.out.println(rs.getString(4));
-                    String n,p,mail,type,age,gender,address,exp,lang;
-                    n=rs.getString(1);
-                    p=rs.getString(2);
-                    mail=rs.getString(3);
-                    type=rs.getString(4);
-                    age=rs.getString(5);
-                    gender=rs.getString(6);
-                    address=rs.getString(7);
-                    exp=rs.getString(8);
-                    lang=rs.getString(9);
-                     HttpSession s=request.getSession();
-                    s.setAttribute("name",n);
-                    s.setAttribute("pass",p);
-                    s.setAttribute("EmailId",mail);
-                    s.setAttribute("type",type);
-                    s.setAttribute("age", age);
-                    s.setAttribute("gender", gender);
-                    s.setAttribute("address",address);
-                    s.setAttribute("exp", exp);
-                    s.setAttribute("lang", lang);
-                    
-                    
+                            //          System.out.println(rs.getString(4));
+                            String n, p, mail, type, age, gender, address, exp, lang;
+                            n = rs.getString(1);
+                            p = rs.getString(2);
+                            mail = rs.getString(3);
+                            type = rs.getString(4);
+                            age = rs.getString(5);
+                            gender = rs.getString(6);
+                            address = rs.getString(7);
+                            exp = rs.getString(8);
+                            lang = rs.getString(9);
+                            HttpSession s = request.getSession();
+                            s.setAttribute("name", n);
+                            s.setAttribute("pass", p);
+                            s.setAttribute("EmailId", mail);
+                            s.setAttribute("type", type);
+                            s.setAttribute("age", age);
+                            s.setAttribute("gender", gender);
+                            s.setAttribute("address", address);
+                            s.setAttribute("exp", exp);
+                            s.setAttribute("lang", lang);
 
-                }
-                      
-                     
-                    }
-                    catch(Exception e)
-                    {
+                        }
+
+                    } catch (Exception e) {
                         e.printStackTrace();
-                        
+
                     }
-                    
-             
-                   
-                   
-               
-          
+
 
                 %>
-                <center> <h1>Welcome,<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <%= name%></h1></center>
-                <h2>Web Security</h2>
-                <p>Websites and web applications are just as prone to security breaches as physical homes, stores, and government locations. Unfortunately, cybercrime happens every day, and great web security measures are needed to protect websites and web applications from becoming compromised.
-
-                    That’s exactly what web security does – it is a system of protection measures and protocols that can protect your website or web application from being hacked or entered by unauthorized personnel. This integral division of Information Security is vital to the protection of websites, web applications, and web services. Anything that is applied over the Internet should have some form of web security to protect it..</p>
-                <p>Your website or web application’s security depends on the level of protection tools that have been equipped and tested on it. There are a few major threats to security which are the most common ways in which a website or web application becomes hacked. Some of the top vulnerabilities for all web-based services include:
-
-                <ul>
-                    <li>SQL injection</li>
-                    <li>Password breach</li>
-                    <li>Cross-site scripting</li>
-                    <li>Data breach</li>
-                    <li>Remote file inclusion</li>
-                    <li>Code injection</li>
-                </ul></p>
+                <center> <h1>Welcome to DiTuSte Crypto,<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <%= name%></h1></center>
+                
+                
+                <div class="row vh-90" style="min-height: 80vh ">
+                    <div class="col-6 m-auto text-center">
+                        <p class="h2">
+                            View Articles
+                        </p>
+                        <p class="h4">
+                            Articles is a similar to blogs where experts/contributor upload their 
+                            articles to help young developer to understand the concepts of web security
+                        </p>
+                    </div>
+                    <div class="col-6 m-auto text-center">
+                        <p class="h4">
+                            <img src="https://cdn.writermag.com/2016/12/blogs-versus-articles.jpg" alt="image"
+                                 style="height: 220px" >
+                        </p>
+                    </div>
+                </div>
+                <div class="row vh-90" style="min-height: 80vh ">
+                    <div class="col-6 m-auto text-center">
+                        <p class="h4">
+                            <img src="data:image/png;base64,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" alt="image"
+                                 style="height: 220px" >
+                        </p>
+                    </div>
+                    <div class="col-6 m-auto text-center">
+                        <p class="h2">
+                            View MiniTools
+                        </p>
+                        <p class="h4">
+                            MiniTools are programs coded by contributors to help user easy some day-to-day
+                            task and help user to safeguard their security.
+                        </p>
+                    </div>
+                    
+                </div>
+                <div class="row vh-90" style="min-height: 80vh ">
+                    <div class="col-6 m-auto text-center">
+                        <p class="h2">
+                            View/Edit Projects
+                        </p>
+                        <p class="h4">
+                            Its difficult to track articles and blogs to solve and build security 
+                            modules using the create project feature you can build and track the 
+                            articles yuh have read.
+                        </p>
+                    </div>
+                    <div class="col-6 m-auto text-center">
+                        <p class="h4">
+                            <img src="https://img.freepik.com/free-vector/list-flat-illustration_183665-75.jpg?size=626&ext=jpg" alt="image"
+                                 style="height: 220px" >
+                        </p>
+                    </div>
+                </div>
 
                 <div class="line"></div>
 

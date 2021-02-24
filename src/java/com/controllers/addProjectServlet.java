@@ -5,6 +5,7 @@
  */
 package com.controllers;
 
+import com.database.ConnectionManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.models.Article;
@@ -15,7 +16,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,20 +52,19 @@ public class addProjectServlet extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("GET addProjectServlet");
         String action = request.getParameter("action");
-        Connection conn = null; // connection to the database
+        Connection dbConn = null; // connection to the database
         String message = null;
         Article a = null;
         ArrayList<Project> projList = null;
         Project p = null;
         switch (action) {
             case "_proj_Id":
-                if ("".equals(request.getParameter("proj_Id"))) {
+                if (!"".equals(request.getParameter("proj_Id"))) {
                     try {
                         String proj_Id = request.getParameter("proj_Id");
-                        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-                        Connection dbconn = DriverManager.getConnection(
-                                "jdbc:mysql://localhost:3306/cryptodb?useSSL=false&allowPublicKeyRetrieval=true", "root", "Steven@1996");
-                        PreparedStatement psmt = dbconn.prepareStatement(""
+
+                        dbConn = ConnectionManager.getConnection();
+                        PreparedStatement psmt = dbConn.prepareStatement(""
                                 + "select proj_Id, spec_id, proj_name, proj_desc, "
                                 + "proj_path, proj_view_type, proj_tech, proj_language, modified_date from projects "
                                 + "where proj_Id = ?");
@@ -93,8 +95,7 @@ public class addProjectServlet extends HttpServlet {
             case "_all":
                 try {
                     DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-                    Connection dbconn = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/cryptodb?useSSL=false&allowPublicKeyRetrieval=true", "root", "Steven@1996");
+                    Connection dbconn = ConnectionManager.getConnection();
                     PreparedStatement psmt = dbconn.prepareStatement(""
                             + "select proj_Id, spec_id, proj_name, proj_desc, "
                             + "proj_path, proj_view_type, proj_tech, proj_language, modified_date from projects");
@@ -129,46 +130,115 @@ public class addProjectServlet extends HttpServlet {
             throws ServletException, IOException {
 
         System.out.println("addProjectServlet's POST Servlet");
+
+        JsonObject json = new JsonObject();
         String title = request.getParameter("pname");
-        String id = request.getParameter("pid");
+        String spec_id = request.getParameter("pid");
         String path = request.getParameter("ppath");
         String desc = request.getParameter("pdesc");
         String type = request.getParameter("ptype");
         String tech = request.getParameter("ptech");
         String lang = request.getParameter("plang");
-
-        System.out.println(request.getParameter("art_items"));
-        System.out.println(request.getParameter("lang"));
+        String sarr = request.getParameter("art_items");
+        String larr = request.getParameter("lang");
+        System.out.println("Received " + request.getParameter("received"));
+        System.out.println(sarr);
+        System.out.println(larr);
 
         try {
-            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-            Connection dbconn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/cryptodb?useSSL=false&allowPublicKeyRetrieval=true", "root", "Steven@1996");
-            PreparedStatement psmt = dbconn.prepareStatement(""
-                    + "insert into projects "
-                    + "(proj_Id, spec_id, proj_name, proj_desc, proj_path, proj_view_type, proj_tech, proj_language, modified_date) "
-                    + "values "
-                    + "((Select * from (Select COALESCE(max(proj_Id)+1,101) from projects) as t),?,?,?,?,?,?,?,CURDATE())");
-            psmt.setString(1, id);
-            psmt.setString(2, title);
-            if (!"".equalsIgnoreCase(desc)) {
-                psmt.setString(3, desc.trim());
+            Connection dbconn = ConnectionManager.getConnection();
+            dbconn.setAutoCommit(false);
+            try {
+
+                //Get New ID for project
+                String proj_id;
+                PreparedStatement psmt3 = dbconn.prepareStatement("Select COALESCE(max(proj_Id)+1,101) from projects");
+                ResultSet rs = psmt3.executeQuery();
+                if (rs.next()) {
+                    proj_id = String.valueOf(rs.getInt(1));
+
+                    //Add new project using parameters
+                    PreparedStatement psmt = dbconn.prepareStatement(""
+                            + "insert into projects "
+                            + "(proj_Id, spec_id, proj_name, proj_desc, proj_path, proj_view_type, proj_tech, proj_language, modified_date) "
+                            + "values "
+                            + "(?,?,?,?,?,?,?,?,CURDATE())");
+                    psmt.setString(1, proj_id);
+                    psmt.setString(2, spec_id);
+                    psmt.setString(3, title);
+                    if (!"".equalsIgnoreCase(desc) && desc != null) {
+                        psmt.setString(4, desc.trim());
+                    }
+                    psmt.setString(5, path);
+                    psmt.setString(6, type);
+                    psmt.setString(7, tech);
+                    psmt.setString(8, lang);
+
+                    int i = psmt.executeUpdate();
+                    System.out.println("inserted " + i);
+                    if (i > 0) {
+
+                        try {
+                            PreparedStatement psmt12 = dbconn.prepareStatement(""
+                                    + "insert into tracker "
+                                    + "(t_id, proj_Id, proj_name, take_notes, article_items, task_done, task_remaining, modified_date) "
+                                    + "values "
+                                    + "((Select * from (Select COALESCE(max(t_id)+1,2101) from tracker) as t),?,?,?,?,?,?,CURDATE())");
+                            psmt12.setString(1, proj_id);
+                            psmt12.setString(2, title);
+                            psmt12.setString(3, "");
+                            psmt12.setString(4, sarr);
+                            psmt12.setString(5, "");
+                            psmt12.setString(6, sarr);
+                            int j = psmt12.executeUpdate();
+                            if (j > 0) {
+                                dbconn.commit();
+                                json.addProperty("response", "Success");
+                            } else {
+                                json.addProperty("response", "Failed");
+                            }
+                        } catch (Exception e) {
+                            System.out.println(e);
+                            new Gson().toJson(e, response.getWriter());
+                            try {
+                                dbconn.rollback();
+                                System.out.println("JDBC Transaction rolled back successfully");
+                            } catch (SQLException e1) {
+                                System.out.println("SQLException in rollback" + e1.getMessage());
+                            }
+                        }
+
+                        new Gson().toJson(json, response.getWriter());
+                    } else {
+                        json.addProperty("response", "Failed");
+                        new Gson().toJson(json, response.getWriter());
+                    }
+
+                } else {
+                    json.addProperty("response", "Failed");
+                    new Gson().toJson(json, response.getWriter());
+                }
+
+            } catch (Exception e) {
+                try {
+                    dbconn.rollback();
+                    System.out.println("JDBC Transaction rolled back successfully");
+                } catch (SQLException e1) {
+                    System.out.println("SQLException in rollback" + e1.getMessage());
+                }
+                System.out.println(e);
+            } finally {
+                try {
+                    if (dbconn != null) {
+                        dbconn.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-            psmt.setString(4, path);
-            psmt.setString(5, type);
-            psmt.setString(6, tech);
-            psmt.setString(7, lang);
-            int i = psmt.executeUpdate();
-            JsonObject json = new JsonObject();
-            System.out.println("inserted " + i);
-            if (i > 0) {
-                json.addProperty("response", "Success");
-                new Gson().toJson(json, response.getWriter());
-            } else {
-                json.addProperty("response", "Failed");
-                new Gson().toJson(json, response.getWriter());
-            }
+
         } catch (Exception e) {
+
             System.out.println(e);
         }
     }

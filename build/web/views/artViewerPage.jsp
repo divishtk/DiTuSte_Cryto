@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>Home</title>
+        <title>DiTuSte_Crypto</title>
 
         <%@ include file="/WEB-INF/jspf/linkFiles.jspf" %>
         <style>
@@ -41,74 +41,20 @@
     <body>
         <div class="wrapper">
             <!-- Sidebar  -->
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <h3 class="mx-3">DiTuSte <br/>&nbsp;&nbsp;&nbsp; Crypto</h3>
-                </div>
 
-                <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="#">Dashboard</a>
-                    </li>
-                    <li class="">
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Security</a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li>
-                                <a href="#">Security Tools</a>
-                            </li>
-                            <li>
-                                <a href="#">Security Guidance</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">My Profile</a>
-                    </li>
-                    <li>
-                        <a href="#">About Us</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </nav>
+            <%@include file="constant/sidebar2.jsp" %>
 
-            <!-- Page Content  -->
             <div id="content">
-
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-
-                        <button type="button" id="sidebarCollapse" class="btn btn-info">
-                            <i class="fas fa-align-left"></i>
-                            <span>Menu</span>
-                        </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fas fa-align-center"></i>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#">My Profile <i class="fas fa-male"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Notification <i class="fas fa-bell"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/DiTuSte_Cryto/logoutSerlvet">Logout <i class="fas fa-sign-out-alt"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                <!-- Page Content  -->
+                <%@include file="constant/headerNav2.jsp" %>
                 <div class="row">
                     <div class="col-12">
-                        <p class="h2 text-center">Denial Of Service</p>
+                        <p class="h2 text-center">Article File</p>
+                        <hr/>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-9 art_doc">
+                <div class="row justify-content-between">
+                    <div class="col-9 art_doc" style="border: 2px solid darkgrey;border-radius: 5px;padding: 25px 10px">
 
                     </div>
                     <div class="row">

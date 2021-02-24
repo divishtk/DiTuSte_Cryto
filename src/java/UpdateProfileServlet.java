@@ -1,5 +1,6 @@
 
 
+import com.database.ConnectionManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -84,8 +85,7 @@ public class UpdateProfileServlet extends HttpServlet {
             
             
                 Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection dbConn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/DeTuSte?useSSL=false&allowPublicKeyRetrieval=true", "root", "ilovemaster");
+            Connection dbConn = ConnectionManager.getConnection();
             dbConn.setAutoCommit(false);
             PreparedStatement ps = dbConn.prepareStatement(
                     "update  Users2 set userName=? , userPassword=?, userType=?,userAge=?,userGender=?,userAddress=?,userExp=?,userLang=? where userEmailId=?");

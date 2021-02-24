@@ -32,6 +32,26 @@
         <servlet-name>labUser</servlet-name>
         <servlet-class>labUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addTracker</servlet-name>
+        <servlet-class>com.controllers.addTracker</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sendEmail</servlet-name>
+        <servlet-class>com.controllers.sendEmail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>userAdminServlet</servlet-name>
+        <servlet-class>com.admin.userAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>miniToolsServlet</servlet-name>
+        <servlet-class>com.controllers.miniToolsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateToolsServlet</servlet-name>
+        <servlet-class>com.controllers.updateToolsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
@@ -55,15 +75,34 @@
     <servlet-mapping>
         <servlet-name>labUser</servlet-name>
         <url-pattern>/labUser</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>articleAddServlet</servlet-name>
         <url-pattern>/articleAddServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addProjectServlet</servlet-name>
         <url-pattern>/addProjectServlet</url-pattern>
-
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addTracker</servlet-name>
+        <url-pattern>/addTracker</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendEmail</servlet-name>
+        <url-pattern>/sendEmail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userAdminServlet</servlet-name>
+        <url-pattern>/userAdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>miniToolsServlet</servlet-name>
+        <url-pattern>/miniToolsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateToolsServlet</servlet-name>
+        <url-pattern>/UpdateToolsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,6 +1,4 @@
-
-
-
+import com.database.ConnectionManager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -46,9 +44,7 @@ public class labUser extends HttpServlet {
         try {
             // connects to the database
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/DeTuSte?useSSL=false&allowPublicKeyRetrieval=true", "root", "ilovemaster");
-            
+            conn = ConnectionManager.getConnection();
             // queries the database
             String sql = "SELECT * FROM minitools_storage";
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -155,12 +151,11 @@ public class labUser extends HttpServlet {
               
               System.out.println("GET Lab User");
             Class.forName("com.mysql.cj.jdbc.Driver");
-            dbConn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/DeTuSte?useSSL=false&allowPublicKeyRetrieval=true", "root", "ilovemaster");
+            dbConn = ConnectionManager.getConnection();
             
             String sql = "Insert into minitools_storage (title,topic,description,data_file,instruction_file,"
-                    + "ratings,uploaded,userId) values "
-                    + "(?, ?, ?, ?, ?, ?,curdate(),?)";
+                    + "ratings,uploaded,userId,last_modified) values "
+                    + "(?, ?, ?, ?, ?, ?,curdate(),?,curdate())";
             PreparedStatement ps = dbConn.prepareStatement(sql);
             ps.setString(1, title);
             ps.setString(2, topic);
@@ -209,9 +204,4 @@ public class labUser extends HttpServlet {
 //            }
         }
     }
-
-    
-    
-   
-
 }

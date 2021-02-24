@@ -5,7 +5,8 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    /*background: #fafafa;*/
+    background: white;
 }
 
 p, ul:not(.list-unstyled):not(.list-group)>li {
@@ -16,7 +17,7 @@ p, ul:not(.list-unstyled):not(.list-group)>li {
     color: #999;
 }
 
-p:not(.h4):not(.h2){
+p:not(.h4):not(.h2):not(.dont-indent){
     text-indent: 30px;
 }
 p.h4{
@@ -195,7 +196,16 @@ a.article:hover {
 .mouseOnHover{
     cursor: pointer;
 }
+
 .custom-article-heading{
     padding: 8px;
+}
+
+.custom-article-code{
+    padding: 18px;
     background-color: #e7e9eb;
+}
+
+.articleId-1{
+    background: #fafafa;
 }

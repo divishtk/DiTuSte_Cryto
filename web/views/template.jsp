@@ -1,5 +1,3 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -7,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <title>Home</title>
+        <title>DiTuSte_Crypto</title>
 
         <%@ include file="/WEB-INF/jspf/linkFiles.jspf" %>
     </head>
@@ -21,30 +19,30 @@
 
                 <ul class="list-unstyled components">
                     <li class="active">
-                        <a href="#">Dashboard</a>
+                        <a href="/DiTuSte_Cryto/views/home.jsp">Home</a>
                     </li>
                     <li class="">
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Security</a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li>
-                                <a href="#">Security Tools</a>
+                                <a href="/DiTuSte_Cryto/views/miniTools.jsp">Security Tools</a>
                             </li>
                             <li>
-                                <a href="#">Security Guidance</a>
+                                <a href="/DiTuSte_Cryto/views/articlePage_2.jsp">Security Guidance</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-
+                        <a href="news.jsp">Security New</a>
+                    </li>
+                    <li>
                         <a href="UserProfile.jsp">My Profile</a>
-                    
-
                     </li>
                     <li>
-                        <a href="#">About Us</a>
+                        <a href="aboutUs.jsp">About Us</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="contactUs.jsp">Contact</a>
                     </li>
                 </ul>
             </nav>
@@ -66,10 +64,7 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#">My Profile <i class="fas fa-male"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Notification <i class="fas fa-bell"></i></a>
+                                    <a class="nav-link" href="UserProfile.jsp">My Profile <i class="fas fa-male"></i></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/DiTuSte_Cryto/logoutSerlvet">Logout <i class="fas fa-sign-out-alt"></i></a>
@@ -98,305 +93,31 @@
                     <h2><center>Write your Content Here..</center></h2>
 
 
-
-
-
-
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#minitools" role="tab" aria-controls="home"
-                               aria-selected="true">Mini Tools</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#article" role="tab" aria-controls="profile"
-                               aria-selected="false">Article</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="minitools" role="tabpanel" aria-labelledby="home-tab">
-                            
-                                    <div class="tab">
-            <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Data File</th>
-            <th>Lab User</th>
-            <th>Approved</th>
-            <th>Last Modified</th>
-            <th>Ratings</th>
-            <th>Topics</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-            
-            
-        </tr>
-        <tr>
-               <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>     
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        
-    </tbody>
-</table>
-        </div>
-                            
-                            </div>
-                        <div class="tab-pane fade" id="article" role="tabpanel" aria-labelledby="profile-tab">
-                            
-                                        <div class="tab">
-            <table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Topic</th>
-            <th>Rated</th>
-            <th>Posted On</th>
-            <th>Lab User</th>
-            <th>last Modified</th>
-            <th>Data File</th>
-            <th>Ratings</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-            
-            
-        </tr>
-        <tr>
-               <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>     
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        <tr>
-                 <td>1</td>
-            <td>Tools</td>
-            <td>None</td>
-            <td>None</td>
-                 <td>None</td>
-                      <td>None</td>
-                           <td>None</td>
-                                <td>None</td>
-                                     <td>None</td>
-        </tr>            
-        
-    </tbody>
-</table>
-        </div>
-
-
-
                 </div>
-
             </div>
 
-
-
-
-        </div>
-
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col"></div>
-                    </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col"></div>
                 </div>
-
             </div>
-        </div>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $("#sidebar").mCustomScrollbar({
-                    theme: "minimal"
-                });
 
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar, #content').toggleClass('active');
-                    $('.collapse.in').toggleClass('in');
-                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                });
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
             });
-        </script>
-    </body>
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #content').toggleClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
 
 </html>
 
